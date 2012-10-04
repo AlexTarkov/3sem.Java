@@ -14,6 +14,6 @@ public class Hello {
      */
     public static void main(String[] args) {
         // TODO code application logic here
-        System.out.println("This is my first program in NetBeans");
+        System.out.println("This is my first program in NetBeans \n jfjf");
     }
 }
