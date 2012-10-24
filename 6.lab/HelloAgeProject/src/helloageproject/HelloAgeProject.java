@@ -21,8 +21,8 @@ public class HelloAgeProject {
         int age = Integer.parseInt(JOptionPane.showInputDialog("How old are you?"));
         
         int i = 0;
-        while(i<age){
-            JOptionPane.showMessageDialog(null,"Hello,"+name);
+        while (i < age) {
+            JOptionPane.showMessageDialog(null, "Hello, " + name);
             i++;
         }
         
