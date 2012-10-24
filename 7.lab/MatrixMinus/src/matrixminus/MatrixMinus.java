@@ -23,15 +23,16 @@ public class MatrixMinus {
                 {1,1,0,5,1},
                 {1,1,0,5,1}
         };
-        begin:{
-            for(int k[]:matr){
-                for(int m:k){
-                    if(m<0) break begin;
-                }
+        
+        for (int k[] : matr) {
+            for (int m : k) {
+                if (m < 0) {
+                    JOptionPane.showMessageDialog(null, "Отрицательные числа найдены.");
+                    return;
+                }        
             }
-        JOptionPane.showMessageDialog(null,"Отрицательных чисел не найдено.");
-        System.exit(0);
         }
-        JOptionPane.showMessageDialog(null,"Отрицательные числа найдены.");
+        
+        JOptionPane.showMessageDialog(null, "Отрицательных чисел не найдено.");
     }
 }

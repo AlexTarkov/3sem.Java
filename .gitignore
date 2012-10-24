@@ -1,3 +1,6 @@
+#MY IGNORE
+*.class
+#------------
 /2.lab/MyHelloProject/nbproject/private/
 /2.lab/MyHelloProject/build/
 /3.lab/ContactEditor/nbproject/private/
@@ -18,3 +21,7 @@
 /7.lab/MatrixMinus/build/
 /7.lab/NSimple/nbproject/private/
 /7.lab/NSimple/build/
+/7.lab/Calculator/nbproject/private/
+/7.lab/Cities/nbproject/private/
+/controls/NumberOne/nbproject/private/
+/controls/NumberOne/build/

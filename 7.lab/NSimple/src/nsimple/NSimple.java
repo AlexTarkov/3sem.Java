@@ -16,8 +16,6 @@ public class NSimple {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        
-
         String result = "";
         int n = Integer.parseInt(JOptionPane.showInputDialog("Введите число N"));
         Queue q = new Queue();
@@ -28,17 +26,21 @@ public class NSimple {
             }
         } 
         else{
-           JOptionPane.showMessageDialog(null,"Нет простых чисел.");
+           JOptionPane.showMessageDialog(null, "Нет простых чисел.");
            System.exit(0);
         }
         
-        while(q.hasNext()) result += q.getNext()+" ";
+        while (q.hasNext()) {
+            result += q.getNext() + " ";
+        }
         
-        JOptionPane.showMessageDialog(null,"Простые числа: "+result);
+        JOptionPane.showMessageDialog(null, "Простые числа: " + result);
     }
-    private static boolean isSimple(int a){
-        for(int i=3;i<=(int)Math.sqrt(a);i+=2){
-            if((a%i)==0){return false;}
+    private static boolean isSimple(int a) {
+        for (int i=3; i <= (int)Math.sqrt(a); i += 2) {
+            if ((a % i) == 0) {
+                return false;
+            }
         }
         return true;
     }
