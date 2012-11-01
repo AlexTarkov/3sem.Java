@@ -20,14 +20,15 @@ public class NSimple {
         int n = Integer.parseInt(JOptionPane.showInputDialog("Введите число N"));
         Queue q = new Queue();
         q.add(2);
-        if(n>=2){
-            for( int i = 3; i<=n; i=i+2 ){
-                if(isSimple(i)){ q.add(i); }
+        if (n >= 2) {
+            for (int i = 3; i <= n; i = i + 2) {
+                if (isSimple(i)) {
+                    q.add(i); 
+                }
             }
-        } 
-        else{
-           JOptionPane.showMessageDialog(null, "Нет простых чисел.");
-           System.exit(0);
+        } else {
+            JOptionPane.showMessageDialog(null, "Нет простых чисел.");
+            System.exit(0);
         }
         
         while (q.hasNext()) {
@@ -37,10 +38,8 @@ public class NSimple {
         JOptionPane.showMessageDialog(null, "Простые числа: " + result);
     }
     private static boolean isSimple(int a) {
-        for (int i=3; i <= (int)Math.sqrt(a); i += 2) {
-            if ((a % i) == 0) {
-                return false;
-            }
+        for (int i = 3; i <= (int)Math.sqrt(a); i += 2) {
+            if ((a % i) == 0) return false;
         }
         return true;
     }
@@ -49,31 +48,31 @@ public class NSimple {
 
 class Queue{
     
-    private Queue head;
-    private Queue tail;
-    private Queue next;
-    private int element;
+    private Queue   head;
+    private Queue   tail;
+    private Queue   next;
+    private int     element;
     
-    public Queue(){
+    public Queue() {
         this.next = null;
         this.head = this;
         this.tail = this;
     }
     
-    public void add(int a){
+    public void add(int a) {
         Queue buf = new Queue();
         buf.element = a;
         this.tail.next = buf;
         this.tail = buf;   
     }
     
-    public int getNext(){
+    public int getNext() {
         this.head = this.head.next;
         return this.head.element;
     }
     
-    public boolean hasNext(){
-        return (this.head.next!=null);
+    public boolean hasNext() {
+        return (this.head.next != null);
     }
     
 }
