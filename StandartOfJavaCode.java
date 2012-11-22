@@ -13,7 +13,7 @@ class StandartOfJavaCode extends Object {
        
        final int N = 10;
        
-       boolean condition, condition1, condition2, condition3, 
+       boolean condition, condition1, condition2, condition3,
                condition4, condition5, condition6;
        
        condition = condition1 = condition2 = condition3 
