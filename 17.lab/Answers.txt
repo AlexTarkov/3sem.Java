@@ -1,0 +1,11 @@
+1.
+MyClass - простое имя
+MyClass.name - составное имя
+MyClass.name.toString() - составное имя
+MyClass.name.toString().hashCode() - идентификатор
+
+2.Да
+
+3.Из любой.
+
+4.c:\Java\programs\
