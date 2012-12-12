@@ -4,6 +4,9 @@
  */
 package buyfood;
 
+//import java.awt.*;
+//import javax.swing.*;
+
 /**
  *
  * @author m10baa3
@@ -16,6 +19,8 @@ public class SecondFrame extends javax.swing.JFrame {
     public SecondFrame(double sum) {
         initComponents();
         this.jTextArea1.setText("Сумма заказа: " + sum + "p.");
+        //JPanel jp = new JPanel();
+        //jp.paintComponent(new Graphics2D() {  });
         
     }
 
