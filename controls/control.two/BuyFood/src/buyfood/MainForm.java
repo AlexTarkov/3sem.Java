@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
@@ -185,41 +185,58 @@ public class MainForm extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(13, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void checkMenus() {
+        javax.swing.JRadioButtonMenuItem[] m = {jRadioButtonMenuItem1, 
+            jRadioButtonMenuItem2, jRadioButtonMenuItem3, jRadioButtonMenuItem4, 
+            jRadioButtonMenuItem5, jRadioButtonMenuItem6
+        };
+        for (int i = 0; i < 7; i++) {
+            if (!m[i].isSelected() && m[i].getText().charAt(0) == '+') m[i].setText(m[i].getText().substring(1));
+            if (m[i].isSelected() && m[i].getText().charAt(0) != '+') m[i].setText("+" + m[i].getText());
+        }
+    }
+    
     private void jRadioButtonMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem1ActionPerformed
         if(jRadioButtonMenuItem1.isSelected() && jRadioButtonMenuItem2.isSelected()) jRadioButtonMenuItem2.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem1ActionPerformed
 
     private void jRadioButtonMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem2ActionPerformed
         if(jRadioButtonMenuItem1.isSelected() && jRadioButtonMenuItem2.isSelected()) jRadioButtonMenuItem1.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem2ActionPerformed
 
     private void jRadioButtonMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem3ActionPerformed
         if(jRadioButtonMenuItem3.isSelected() && jRadioButtonMenuItem4.isSelected()) jRadioButtonMenuItem4.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem3ActionPerformed
 
     private void jRadioButtonMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem4ActionPerformed
         if(jRadioButtonMenuItem3.isSelected() && jRadioButtonMenuItem4.isSelected()) jRadioButtonMenuItem3.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem4ActionPerformed
 
     private void jRadioButtonMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem5ActionPerformed
         if(jRadioButtonMenuItem5.isSelected() && jRadioButtonMenuItem6.isSelected()) jRadioButtonMenuItem6.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem5ActionPerformed
 
     private void jRadioButtonMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButtonMenuItem6ActionPerformed
         if(jRadioButtonMenuItem5.isSelected() && jRadioButtonMenuItem6.isSelected()) jRadioButtonMenuItem5.setSelected(false);
+        checkMenus();
     }//GEN-LAST:event_jRadioButtonMenuItem6ActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         int reply = JOptionPane.showConfirmDialog(null, "Продолжить?", "Продолжение", JOptionPane.YES_NO_OPTION);
         if (reply == JOptionPane.YES_OPTION) {
             double sum = 0;
-            sum = (jRadioButtonMenuItem1.isSelected() ? 1 : 0) * 25 +
+            sum = (jRadioButtonMenuItem1.isSelected() ? 1 : 0) * 25 + //MAGIC MAGIC...
                     (jRadioButtonMenuItem2.isSelected() ? 1 : 0) * 30 +
                     (jRadioButtonMenuItem3.isSelected() ? 1 : 0) * 45 +
                     (jRadioButtonMenuItem4.isSelected() ? 1 : 0) * 30 +
@@ -228,6 +245,7 @@ public class MainForm extends javax.swing.JFrame {
             sum = Integer.parseInt(jTextField1.getText()) * sum * (jRadioButton1.isSelected() ? 0.9 : 1);
             SecondFrame sf = new SecondFrame(sum);
             sf.setVisible(true);
+            //sf.draww();
             //sf.get
             
         }

@@ -5,6 +5,9 @@
 package buyfood;
 
 //import java.awt.*;
+
+import java.awt.*;
+
 //import javax.swing.*;
 
 /**
@@ -19,9 +22,20 @@ public class SecondFrame extends javax.swing.JFrame {
     public SecondFrame(double sum) {
         initComponents();
         this.jTextArea1.setText("Сумма заказа: " + sum + "p.");
+        draww();
         //JPanel jp = new JPanel();
         //jp.paintComponent(new Graphics2D() {  });
         
+    }
+    
+    public void draww() {
+        Graphics2D g = (Graphics2D)jPanel1.getGraphics();
+        //Graphics2D g = new 
+        //g.draw(new Shape);
+        g.setBackground(Color.red);
+        g.drawOval(100, 100, 30, 30);
+        //jPanel1.paintComponents(g);
+        //jPanel1.paintComponents(g);
     }
 
     /**
@@ -35,6 +49,47 @@ public class SecondFrame extends javax.swing.JFrame {
 
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
+        jPanel1 = new javax.swing.JPanel() {
+            @Override
+            public void paint(Graphics g) {
+                super.paint(g);
+                
+                Graphics2D g2 = (Graphics2D)g;
+                
+                int s = 10;
+                int p = Math.min(getWidth(), getHeight()) - 6 * s;
+                
+                g2.setColor(Color.yellow);
+                g2.drawString("Company Name", s, 3 * s + p);
+                
+                int[] mas = {2, 30, 2, 0};
+                Color[] col = {Color.yellow, Color.red, Color.yellow, Color.blue};
+                
+                for (int i = 0; i < 4; i++) {
+                    g2.setColor(col[i]); 
+                    g2.fillOval(s, s, p, p);
+                    s += mas[i];
+                    p -= mas[i] * 2; //или лучше разделить на 2??
+                }
+                
+                
+//                g2.setColor(Color.yellow);           
+//                g2.fillOval(s, s, p, p);
+//                
+//                p -= 1;
+//                g.setColor(Color.red);
+//                g2.fillOval(s, s, p, p);
+//                
+//                p -= 30;
+//                g.setColor(Color.yellow);
+//                g2.fillOval(s, s, p, p);
+//                
+//                g.setColor(Color.blue);
+//                g.drawOval(getWidth() / 2, getHeight() / 2, getWidth() - 32, getHeight() - 32);
+                
+                
+            } 
+        };
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,13 +98,26 @@ public class SecondFrame extends javax.swing.JFrame {
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 199, Short.MAX_VALUE)
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 397, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -57,7 +125,9 @@ public class SecondFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(156, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -98,6 +168,7 @@ public class SecondFrame extends javax.swing.JFrame {
 //        });
 //    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     // End of variables declaration//GEN-END:variables
