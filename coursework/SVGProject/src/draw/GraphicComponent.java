@@ -7,7 +7,6 @@ package draw;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import static java.lang.Math.*;
-import sun.java2d.SunGraphics2D;
 
 /**
  *

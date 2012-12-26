@@ -84,7 +84,7 @@ public class CompositeShapes extends Shape{
     @Override
     public void setParameters(float[] params) {
         
-    } //добавить генерацию исключения
+    } //добавить генерацию исключения (или не стоит)
     
     @Override // BETA REALIZATION COMPLETE
     public void rotate(float angle, float x, float y) {
@@ -108,6 +108,22 @@ public class CompositeShapes extends Shape{
             System.out.println(sh.getName()+".draw()");
             sh.draw(gr);
         }
+    }
+    
+    @Override
+    public Shape find(String name) {
+        Iterator<Shape> it = this.iterator();
+        while (it.hasNext()) {
+            Shape temp = it.next();
+            if (temp.getName().equals(name)) {
+                return temp;
+            } else if (temp.isComposite()) {
+                Shape temp2 = temp.find(name);
+                if(temp2 != null) return temp2;
+            }
+        }
+        return null;
+        
     }
 //==============================================================================    
 //    // Iterator methods

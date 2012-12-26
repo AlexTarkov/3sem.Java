@@ -37,11 +37,15 @@ public class Application extends javax.swing.JFrame {
      */
     
     public Application() {
+        super("SVG Editor");
         initComponents();
         myInit();
     }
     
     private void myInit() {
+        
+        commandField.requestFocus();
+        
         this.picture = new CompositeShapes();
         this.picture.setName("picture");
         this.getRootPane().setDefaultButton(runButton);
@@ -52,7 +56,7 @@ public class Application extends javax.swing.JFrame {
         // намерено нет имени, что вызовет ошибку (возможно стоит присваивать стандартные)
         prototypes.put("rectangle", new Rectangle());
         prototypes.put("circle", new Circle());
-        prototypes.put("composition", new CompositeShapes());
+        prototypes.put("comp", new CompositeShapes());
         
         this.commands = new HashMap<String, Command>();
         //======================================================================
@@ -80,6 +84,13 @@ public class Application extends javax.swing.JFrame {
             Shape temp = picture.find(a[0]);
             picture.remove(a[0]);
             picture.find(a[1]).add(temp);
+        }});
+        
+        commands.put("move", new Command() { public void action(String[] a) {
+            Shape temp = picture.find(a[0]);
+            float[] params = new float[a.length-1];
+            for (int i = 1; i < a.length; i++) {params[i-1] = Float.parseFloat(a[i]);}
+            temp.move(params[0], params[1]);
         }});
         
         consoleArea.setText("Начало работы...");
