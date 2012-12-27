@@ -5,12 +5,17 @@
 package svgproject;
 
 import draw.*;
+import java.awt.BorderLayout;
+import java.awt.Dimension;
+import java.awt.Frame;
 import shapes.*;
 
 import java.util.HashMap;
 
 import java.awt.Graphics;
 import java.util.Arrays;
+import javax.swing.BoxLayout;
+import javax.swing.JComponent;
 
 /**
  *
@@ -19,7 +24,7 @@ import java.util.Arrays;
 public class Application extends javax.swing.JFrame {
     
     //==========================================================================
-    //private GraphicComponent graphic;
+    private GraphicComponent graphic;
     
     private CompositeShapes picture;
     /*главная картинка-композиция. именно picture будет являться 
@@ -37,7 +42,11 @@ public class Application extends javax.swing.JFrame {
      */
     
     public Application() {
-        super("SVG Editor");
+        //super("SVG Editor");
+        this.setTitle("SVG Editor");
+        //this.setMaximizedBounds(Frame.MAXIMIZED_BOTH);
+        //this.setm
+        this.setExtendedState(Frame.MAXIMIZED_BOTH);
         initComponents();
         myInit();
     }
@@ -48,7 +57,41 @@ public class Application extends javax.swing.JFrame {
         
         this.picture = new CompositeShapes();
         this.picture.setName("picture");
+        
+        this.graphic = new GraphicComponent();
+        
+        graphic.setReviewArea(800, 300); // ONLY FOR TESTS
+        
+        
         this.getRootPane().setDefaultButton(runButton);
+        
+//        //this.paintPanel.setLayout(new BoxLayout(paintPanel, BoxLayout.X_AXIS));
+//        
+//        
+//        
+//        System.out.println(this.mainPanel.getLayout().getClass().getName() + "!!!");
+//        
+//        //paintPanel.setSize(300, 300);
+//        paintPanel.setPreferredSize(new Dimension(300, 300));
+//        paintPanel.setMinimumSize(new Dimension(300, 300));
+//        paintPanel.setMaximumSize(new Dimension(300, 300));
+//        
+//        //mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.X_AXIS));
+//        
+//        BoxLayout box = new BoxLayout(mainPanel, BoxLayout.X_AXIS);
+//        
+//        mainPanel.setLayout(box);
+//        
+//        paintPanel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
+//        paintPanel.setAlignmentY(JComponent.CENTER_ALIGNMENT);
+        
+        
+//        mainPanel.remove(paintPanel);
+//        mainPanel.add(paintPanel, BorderLayout.CENTER);
+//        
+        //paintPanel.setSize(300, 300);
+        
+        //mainPanel.getLayout().removeLayoutComponent(paintPanel);
         
         this.prototypes = new HashMap<String, Shape>();
         
@@ -76,14 +119,22 @@ public class Application extends javax.swing.JFrame {
         commands.put("cp", new Command() { public void action(String[] a) {
             Shape temp = picture.find(a[0]);
             temp = temp.getCopy();
-            temp.setName(temp.getName() + Shape.COPY_SUFFIX);
+            if(a.length == 1) {
+                temp.setName(temp.getName() + Shape.COPY_SUFFIX);
+            } else {
+                temp.setName(a[1]);
+            }
             picture.add(temp);
         }});
         
         commands.put("addto", new Command() { public void action(String[] a) {
             Shape temp = picture.find(a[0]);
             picture.remove(a[0]);
-            picture.find(a[1]).add(temp);
+            if(a.length == 1) {
+                picture.add(temp);
+            } else {
+                picture.find(a[1]).add(temp);
+            }
         }});
         
         commands.put("move", new Command() { public void action(String[] a) {
@@ -91,6 +142,14 @@ public class Application extends javax.swing.JFrame {
             float[] params = new float[a.length-1];
             for (int i = 1; i < a.length; i++) {params[i-1] = Float.parseFloat(a[i]);}
             temp.move(params[0], params[1]);
+        }});
+        
+        commands.put("scale", new Command() { public void action(String[] a) {
+            graphic.setScale(Float.parseFloat(a[0]), Float.parseFloat(a[1]), Float.parseFloat(a[2]));
+        }});
+        
+        commands.put("setRA", new Command() { public void action(String[] a) {
+            graphic.setReviewArea(Float.parseFloat(a[0]), Float.parseFloat(a[1]));
         }});
         
         consoleArea.setText("Начало работы...");
@@ -107,35 +166,22 @@ public class Application extends javax.swing.JFrame {
     private void initComponents() {
 
         mainPanel = new javax.swing.JPanel();
-        commandField = new javax.swing.JTextField();
-        runButton = new javax.swing.JButton();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        consoleArea = new javax.swing.JTextArea();
         paintPanel = new javax.swing.JPanel() {
             public void paint(Graphics g) {
                 super.paint(g);
-                picture.draw(new GraphicComponent(g));
+                graphic.setGraphic(g);
+                graphic.paingReviewArea();
+                picture.draw(graphic);
             }
         };
+        jScrollPane1 = new javax.swing.JScrollPane();
+        consoleArea = new javax.swing.JTextArea();
+        commandField = new javax.swing.JTextField();
+        runButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        mainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder("Редактор SVG"));
-
-        runButton.setText("Выполнить");
-        runButton.setFocusCycleRoot(true);
-        runButton.setSelected(true);
-        runButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                runButtonActionPerformed(evt);
-            }
-        });
-
-        consoleArea.setEditable(false);
-        consoleArea.setColumns(20);
-        consoleArea.setLineWrap(true);
-        consoleArea.setRows(5);
-        jScrollPane1.setViewportView(consoleArea);
+        mainPanel.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Редактор SVG"));
 
         paintPanel.setBackground(new java.awt.Color(255, 255, 255));
         paintPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -148,8 +194,23 @@ public class Application extends javax.swing.JFrame {
         );
         paintPanelLayout.setVerticalGroup(
             paintPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 203, Short.MAX_VALUE)
+            .addGap(0, 253, Short.MAX_VALUE)
         );
+
+        consoleArea.setEditable(false);
+        consoleArea.setColumns(20);
+        consoleArea.setLineWrap(true);
+        consoleArea.setRows(5);
+        jScrollPane1.setViewportView(consoleArea);
+
+        runButton.setText("Выполнить");
+        runButton.setFocusCycleRoot(true);
+        runButton.setSelected(true);
+        runButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                runButtonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout mainPanelLayout = new javax.swing.GroupLayout(mainPanel);
         mainPanel.setLayout(mainPanelLayout);
@@ -158,12 +219,12 @@ public class Application extends javax.swing.JFrame {
             .addGroup(mainPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(mainPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(paintPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 636, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 648, Short.MAX_VALUE)
                     .addGroup(mainPanelLayout.createSequentialGroup()
                         .addComponent(commandField)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(runButton, javax.swing.GroupLayout.PREFERRED_SIZE, 111, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(paintPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         mainPanelLayout.setVerticalGroup(
@@ -200,13 +261,14 @@ public class Application extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
     private void runButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_runButtonActionPerformed
         //this.picture.add(new Line("line1",1, 1, 100, 100));
         parseConsole(commandField.getText());
         wtc(commandField.getText());
         commandField.setText("");
+        //throw new IndexOutOfBoundsException();
     }//GEN-LAST:event_runButtonActionPerformed
+
 
     /**
      * @param args the command line arguments
@@ -266,3 +328,10 @@ public class Application extends javax.swing.JFrame {
     private javax.swing.JButton runButton;
     // End of variables declaration//GEN-END:variables
 }
+
+//paintPanel = new javax.swing.JPanel() {
+//            public void paint(Graphics g) {
+//                super.paint(g);
+//                picture.draw(new GraphicComponent(g));
+//            }
+//        };
